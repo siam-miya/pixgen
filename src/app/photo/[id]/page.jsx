@@ -5,13 +5,18 @@ import React from 'react'
 import { FaHeart } from 'react-icons/fa'
 import { FiDownload } from 'react-icons/fi'
 
-const PhotoCard = ({ photo }) => {
-  console.log(photo)
+const PhotoDetails = async ({params}) => {
+    const res = await fetch("https://pixgen-alpha-ten.vercel.app/data.json")
+    const photos = await res.json()
+    console.log(photos)
+    const {id} = await params
+    console.log(id)
+    const photo = photos.find(p => p.id == id)
   return (
-    <div>
+   <div className='container'>
       <Card className='border'>
-        <div className='relative w-full aspect-square'>
-          <Image src={photo.imageUrl} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" alt={photo.title} className='rounded-xl object-cover'/>
+        <div className='relative'>
+          <Image src={photo.imageUrl} height={20} width={1400}  alt={photo.title} className='rounded-xl object-cover h-[500px]'/>
           <Chip className='absolute right-2 top-3'>
             {photo.category}
           </Chip>
@@ -26,11 +31,14 @@ const PhotoCard = ({ photo }) => {
           <p className='flex items-center gap-2'><FiDownload />
             {photo.downloads}</p>
         </div>
-        <Link href={`/photo/${photo.id}`}>
-        <Button className={"w-full"}>View</Button></Link>
+        <div>
+            <p className='font-semibold'>{photo.prompt}</p>
+            <p>Model: {photo.model}</p>
+            <p>Resolution: {photo.resolution}</p>
+        </div>
       </Card>
     </div>
   )
 }
 
-export default PhotoCard
+export default PhotoDetails
