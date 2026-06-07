@@ -1,7 +1,6 @@
 "use client";
 import { authClient } from "@/lib/auth-client"
 import { Avatar, Button } from "@heroui/react";
-import { router } from "better-auth/api";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -52,10 +51,13 @@ const Navbar = () => {
             </li>
           </ul>}
           {user && <div className="flex items-center gap-4">
+            <div>hello: {user.name}</div>
+            <Link className="cursor-pointer" href={"/profile"}>
             <Avatar size="sm">
               <Avatar.Image alt={user?.name} src={user?.image} />
               <Avatar.Fallback>{user?.name[0]}</Avatar.Fallback>
             </Avatar>
+            </Link>
             <div>
               <Button onClick={handleSignOut} size="sm" variant="danger">Logout</Button>
             </div>
