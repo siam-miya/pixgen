@@ -12,6 +12,7 @@ import {
   TextField,
 } from "@heroui/react";
 import { useRouter } from "next/navigation";
+import { FaGoogle } from "react-icons/fa";
 
 export default function SignUpPage() {
   const router = useRouter()
@@ -33,6 +34,13 @@ const { data, error } = await authClient.signUp.email({
   router.push("/login")
  } 
   };
+
+  // google sign in
+  const handleGoogleSignIn = async () => {
+     const data = await authClient.signIn.social({
+    provider: "google",
+  });
+  }
 
   return (
     <Card className="border mx-auto w-125 py-10 mt-5">
@@ -105,6 +113,10 @@ const { data, error } = await authClient.signUp.email({
           </Button>
         </div>
       </Form>
+      <div>
+        <p className="text-center my-2">OR</p>
+        <Button onClick={handleGoogleSignIn} className={"w-full"}><FaGoogle />Continue With Google</Button>
+      </div>
     </Card>
   );
 }

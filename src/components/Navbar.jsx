@@ -1,8 +1,17 @@
 "use client";
+import { authClient } from "@/lib/auth-client"
+import { Avatar, Button } from "@heroui/react";
+import { router } from "better-auth/api";
 import Image from "next/image";
 import Link from "next/link";
 
 const Navbar = () => {
+  const currentUser = authClient.useSession()
+  const user = currentUser.data?.user
+  console.log(user)
+  const handleSignOut = async () => {
+    await authClient.signOut();
+  }
   return (
     <div className="border-b px-2 container">
       <nav className=" flex justify-between items-center py-3 w-full">
@@ -34,14 +43,23 @@ const Navbar = () => {
         </ul>
 
         <div className="flex ">
-          <ul className="flex items-center text-sm gap-4">
+          {!user && <ul className="flex items-center text-sm gap-4">
             <li>
               <Link href={"/signup"}>SignUp</Link>
             </li>
             <li>
               <Link href={"/login"}>SignIn</Link>
             </li>
-          </ul>
+          </ul>}
+          {user && <div className="flex items-center gap-4">
+            <Avatar size="sm">
+              <Avatar.Image alt={user?.name} src={user?.image} />
+              <Avatar.Fallback>{user?.name[0]}</Avatar.Fallback>
+            </Avatar>
+            <div>
+              <Button onClick={handleSignOut} size="sm" variant="danger">Logout</Button>
+            </div>
+          </div>}
         </div>
       </nav>
     </div>
