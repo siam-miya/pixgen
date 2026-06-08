@@ -13,5 +13,5 @@ if (!session){
 }
  
 export const config = {
-  matcher: ["/profile", "/photo/:path"],
+  matcher: ["/profile", "/photo/:path+"],
 }
