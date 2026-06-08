@@ -1,7 +1,6 @@
 import Category from '@/components/Category'
 import PhotoCard from '@/components/PhotoCard'
 
-
 const PhotoPage = async ({searchParams}) => {
   const {category} = await searchParams
   console.log(category)
